@@ -19,7 +19,7 @@ Insert gif or link to demo
 
 ## Tech Stack
 
-**Client:** React, Vite, Bootstrap,
+**Client:** React, Vite, Bootstrap, dotenv, uuid, axios, react-router-dome
 
 **Server:** Node, Express, MongoDB
 
