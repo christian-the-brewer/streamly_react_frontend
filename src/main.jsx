@@ -7,6 +7,10 @@ import Root from "./routes/root.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ErrorPage from "./components/errors/ErrorPage.jsx";
 import Register from "./routes/auth/register.jsx";
+import MoviesIndex from "./components/MoviesIndex.jsx";
+import ShowMovie from "./components/ShowMovie.jsx";
+
+
 
 const router = createBrowserRouter([
     {
@@ -18,9 +22,16 @@ const router = createBrowserRouter([
                 path: "/register",
                 element: <Register />,
             },
+            {
+                path: "/movies",
+                element: <MoviesIndex />,
+            },
+            {
+                path: "/movies/:movieId",
+                element: <ShowMovie />
+            }
         ]
     },
-
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
