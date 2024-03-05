@@ -8,3 +8,11 @@ export const getPopularMovies = (region) => {
         method: "GET",
     })
 };
+
+//get single movie page
+export const getMovieById = (movieId) => {
+    return axios({
+        url: `${apiUrl}/movie/${movieId}`,
+        method: "GET",
+    })
+};

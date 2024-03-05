@@ -3,13 +3,12 @@ import {Link} from "react-router-dom";
 import { getPopularMovies} from "../api/movies.js";
 import {useEffect, useState} from "react";
 
-export default function CardIndex(props) {
+export default function CardIndex() {
 
     //state
     const [movies, setMovies] = useState(null);
 
     useEffect(() => {
-        console.log("hit useEffect")
         getPopularMovies("us")
             .then(res => setMovies(res.data.movies))
             .catch(err => {
