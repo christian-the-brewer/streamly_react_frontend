@@ -9,6 +9,7 @@ import ErrorPage from "./components/errors/ErrorPage.jsx";
 import Register from "./routes/auth/register.jsx";
 import MoviesIndex from "./components/MoviesIndex.jsx";
 import ShowMovie from "./components/ShowMovie.jsx";
+import Login from "./routes/auth/login.jsx";
 
 
 
@@ -19,9 +20,22 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
+                path: "/",
+                element: <MoviesIndex />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/logout",
+                element: <MoviesIndex />,
+            },
+            {
                 path: "/register",
                 element: <Register />,
             },
+
             {
                 path: "/movies",
                 element: <MoviesIndex />,
