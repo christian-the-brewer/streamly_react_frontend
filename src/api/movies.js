@@ -9,6 +9,14 @@ export const getPopularMovies = (region) => {
     })
 };
 
+//get index of most popular movies by platform in user's region
+export const getPopularMoviesByPlatform = (region, platform) => {
+    return axios({
+        url: `${apiUrl}/movies/${region}/${platform}`,
+        method: "GET",
+    })
+};
+
 //get single movie page
 export const getMovieById = (movieId) => {
     return axios({

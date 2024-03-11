@@ -1,4 +1,15 @@
-import {Col, Button, Form, Nav, Navbar, NavbarBrand, NavbarCollapse, NavbarToggle, Row} from "react-bootstrap";
+import {
+    Col,
+    Button,
+    Form,
+    Nav,
+    Navbar,
+    NavbarBrand,
+    NavbarCollapse,
+    NavbarToggle,
+    Row,
+    NavDropdown
+} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import LoginModal from "./LoginModal.jsx";
@@ -16,7 +27,14 @@ export default function NavBar(props) {
                 <NavbarCollapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link onClick={()=>setExpanded(false)} href="#home" as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies">Movies</Nav.Link>
+                        <NavDropdown title="Movies" id="basic-nav-dropdown">
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies">All</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies/netflix" as={Link} to="/movies/netflix">Netflix</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies/hulu">Hulu</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies/max">Max</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies/prime">Prime</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies/disney">Disney+</NavDropdown.Item>
+                        </NavDropdown>
                         <Nav.Link onClick={()=>setExpanded(false)} href="#shows">Shows</Nav.Link>
                         <Nav.Link onClick={()=>setExpanded(false)} href="#register" as={Link} to="/register">Sign Up</Nav.Link>
                         <Nav.Link  onClick={()=>{

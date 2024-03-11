@@ -10,6 +10,7 @@ import Register from "./routes/auth/register.jsx";
 import MoviesIndex from "./components/MoviesIndex.jsx";
 import ShowMovie from "./components/ShowMovie.jsx";
 import Login from "./routes/auth/login.jsx";
+import {getPopularMovies, getPopularMoviesByPlatform} from "./api/movies.js";
 
 
 
@@ -21,7 +22,10 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <MoviesIndex />,
+                element: <MoviesIndex
+                title={"Today's Hot Movies"}
+                apiCall={getPopularMovies}
+                />,
             },
             {
                 path: "/login",
@@ -35,13 +39,26 @@ const router = createBrowserRouter([
                 path: "/register",
                 element: <Register />,
             },
-
             {
                 path: "/movies",
-                element: <MoviesIndex />,
+                element: <MoviesIndex
+                    title={"Today's Hot Movies"}
+                    apiCall={getPopularMovies}
+                />,
+            },
+            {
+                path: "/movies/:platform",
+                element: <MoviesIndex
+                    title={"Popular on"}
+                    apiCall={getPopularMoviesByPlatform}
+                />,
             },
             {
                 path: "/movie/:id",
+                element: <ShowMovie />
+            },
+            {
+                path: "/search",
                 element: <ShowMovie />
             }
         ]

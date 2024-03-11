@@ -1,20 +1,31 @@
 import {Card, CardGroup, Col, Nav, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import { getPopularMovies} from "../api/movies.js";
+import {Link, useParams} from "react-router-dom";
+import { getPopularMovies } from "../api/movies.js";
 import {useEffect, useState} from "react";
 
-export default function CardIndex() {
+export default function CardIndex(props) {
 
     //state
     const [movies, setMovies] = useState(null);
+    const {platform} = useParams()
+
 
     useEffect(() => {
-        getPopularMovies("us")
-            .then(res => setMovies(res.data.movies))
-            .catch(err => {
-                console.log(err)
-            })
-    }, []);
+        // getPopularMovies("us")
+        if (platform !== undefined) {
+            props.apiCall("US", platform)
+                .then(res => setMovies(res.data.movies))
+                .catch(err => {
+                    console.log(err)
+                })
+        } else {
+            props.apiCall("US")
+                .then(res => setMovies(res.data.movies))
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }, [platform]);
 
     if (!movies) {
         return <h1>Loading</h1>
