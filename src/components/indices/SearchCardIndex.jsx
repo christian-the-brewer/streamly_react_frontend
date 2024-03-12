@@ -1,11 +1,11 @@
 import {Link, useParams} from "react-router-dom";
 import {Card, Col, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import TVCard from "./cards/TVCard.jsx";
-import MovieCard from "./cards/MovieCard.jsx"
-import PersonCard from "./cards/PersonCard.jsx";
+import TVCard from "../cards/TVCard.jsx";
+import MovieCard from "../cards/MovieCard.jsx"
+import PersonCard from "../cards/PersonCard.jsx";
 
-export default function SearchIndex(props) {
+export default function SearchCardIndex(props) {
 
     const [results, setResults] = useState(null);
     const { term } = useParams()

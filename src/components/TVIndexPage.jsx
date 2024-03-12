@@ -1,8 +1,8 @@
-import MovieCardIndex from "./MovieCardIndex.jsx";
 import {useParams} from "react-router-dom";
+import TVCardIndex from "./indices/TVCardIndex.jsx";
 
 
-export default function MoviesIndex(props) {
+export default function TVIndexPage(props) {
     const {platform} = useParams()
 
     //conditionally render the proper title.
@@ -10,8 +10,8 @@ export default function MoviesIndex(props) {
 
     return (
         <>
-        <h1 className="text-capitalize">{title}</h1>
-            <MovieCardIndex
+            <h1 className="text-capitalize">{title}</h1>
+            <TVCardIndex
                 apiCall={props.apiCall}
             />
         </>
