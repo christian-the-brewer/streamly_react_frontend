@@ -11,6 +11,7 @@ import MoviesIndex from "./components/MoviesIndex.jsx";
 import ShowMovie from "./components/ShowMovie.jsx";
 import Login from "./routes/auth/login.jsx";
 import {getPopularMovies, getPopularMoviesByPlatform} from "./api/movies.js";
+import SearchResults from "./components/SearchResults.jsx";
 
 
 
@@ -58,8 +59,8 @@ const router = createBrowserRouter([
                 element: <ShowMovie />
             },
             {
-                path: "/search",
-                element: <ShowMovie />
+                path: "/search/multi/:term",
+                element: <SearchResults />
             }
         ]
     },

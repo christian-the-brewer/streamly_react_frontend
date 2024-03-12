@@ -1,6 +1,5 @@
 import {Card, CardGroup, Col, Nav, Row} from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
-import { getPopularMovies } from "../api/movies.js";
 import {useEffect, useState} from "react";
 
 export default function CardIndex(props) {

@@ -10,12 +10,14 @@ import {
     Row,
     NavDropdown
 } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import LoginModal from "./LoginModal.jsx";
+import SearchBar from "./SearchBar.jsx";
 
 export default function NavBar(props) {
     const [expanded, setExpanded] = useState(false);
+
 
     return (
 
@@ -41,16 +43,7 @@ export default function NavBar(props) {
                             setExpanded(false)
                             props.setShow(true)}} >Sign In</Nav.Link>
                     </Nav>
-                    <Form>
-                        <Row>
-                            <Col xs="auto">
-                                <Form.Control type="text" placeholder="Search" className="mn-sm-2"/>
-                            </Col>
-                            <Col xs="auto">
-                                <Button type="submit">Search</Button>
-                            </Col>
-                        </Row>
-                    </Form>
+                    <SearchBar />
                 </NavbarCollapse>
             <LoginModal
             handleClose={props.handleClose}
