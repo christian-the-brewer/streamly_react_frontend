@@ -2,7 +2,7 @@ import {Card, CardGroup, Col, Nav, Row} from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-export default function CardIndex(props) {
+export default function MovieCardIndex(props) {
 
     //state
     const [movies, setMovies] = useState(null);

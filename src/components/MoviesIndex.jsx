@@ -1,4 +1,4 @@
-import CardIndex from "./CardIndex.jsx";
+import MovieCardIndex from "./MovieCardIndex.jsx";
 import {useParams} from "react-router-dom";
 
 
@@ -11,7 +11,7 @@ export default function MoviesIndex(props) {
     return (
         <>
         <h1 className="text-capitalize">{title}</h1>
-            <CardIndex
+            <MovieCardIndex
                 apiCall={props.apiCall}
             />
         </>
