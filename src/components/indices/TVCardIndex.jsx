@@ -31,7 +31,7 @@ export default function TVCardIndex(props) {
     }
 
     const tvCards = shows.map((show, index) => (
-        <Link to={`/tv/${show.id}`} key={index}>
+        <Link to={`/tv/show/${show.id}`} key={index}>
             <Col key={index}>
                 <Card className="bg-dark text-white">
                     <Card.Img src={`https://image.tmdb.org/t/p/w500${show.poster_path}`} alt={show.title}/>

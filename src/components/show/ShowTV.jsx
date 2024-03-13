@@ -8,10 +8,8 @@ export default function ShowTV() {
     const {id} = useParams();
 
     useEffect(() => {
-        console.log("show tv id: ", id)
         getTVById(id)
             .then(res => {
-                console.log(res.data.show)
                 setShow(res.data.show)
             }).catch(err => {
             console.log(err)
@@ -24,6 +22,10 @@ export default function ShowTV() {
         const split_date = date.split("-");
         return split_date[0];
     }
+
+    const inProduction = () => {
+        return show.in_production ? "Present" : year(show.last_air_date);
+    };
 
     //function to show the average rating
     const rating = () => {
@@ -51,7 +53,7 @@ export default function ShowTV() {
             </div>
             <div>
                 <h2>{show.name}</h2>
-                <h5> {year(show.first_air_date)} - {year(show.last_air_date)}</h5>
+                <h5> {year(show.first_air_date)} - {inProduction()}</h5>
                 <h5>{rating()}</h5>
                 <ul> {genresList()} </ul>
                 <h6>{show.overview}</h6>

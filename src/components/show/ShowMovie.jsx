@@ -7,7 +7,6 @@ export default function ShowMovie() {
     const {id} = useParams();
 
     useEffect(() => {
-        console.log("show movie id: ", id)
         getMovieById(id)
             .then(res => {
                 setMovie(res.data.movie)

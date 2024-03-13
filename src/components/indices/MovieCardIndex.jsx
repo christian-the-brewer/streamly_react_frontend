@@ -10,7 +10,6 @@ export default function MovieCardIndex(props) {
 
 
     useEffect(() => {
-        // getPopularMovies("us")
         if (platform !== undefined) {
             props.apiCall("US", platform)
                 .then(res => setMovies(res.data.movies))
@@ -42,15 +41,6 @@ export default function MovieCardIndex(props) {
 
     return (
         <Row xs={1} md={2} lg={4} className="g-4">
-            {/*{props.content.map((content, index) => (*/}
-            {/*    <Col key={index}>*/}
-            {/*        <Link to={`/movies/${content.id}`}>*/}
-            {/*        <Card className="bg-dark text-white">*/}
-            {/*            <Card.Img src={content.image} alt={content.alt}/>*/}
-            {/*        </Card>*/}
-            {/*        </Link>*/}
-            {/*    </Col>*/}
-            {/*))}*/}
             {movieCards}
         </Row>
     )

@@ -36,7 +36,6 @@ export default function SearchCardIndex(props) {
 
     return (
         <Row xs={1} md={2} lg={4} className="g-4">
-
             {searchCards}
         </Row>
     )
