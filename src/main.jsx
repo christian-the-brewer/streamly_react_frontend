@@ -14,6 +14,7 @@ import {getPopularMovies, getPopularMoviesByPlatform} from "./api/movies.js";
 import SearchResultsPage from "./components/SearchResultsPage.jsx";
 import TVIndexPage from "./components/TVIndexPage.jsx";
 import {getPopularTV, getPopularTVByPlatform} from "./api/tv.js";
+import ShowTV from "./components/show/ShowTV.jsx";
 
 
 const router = createBrowserRouter([
@@ -74,8 +75,8 @@ const router = createBrowserRouter([
                 />,
             },
             {
-                path: "/tv/:id",
-                element: <ShowMovie/>
+                path: "/tv/show/:id",
+                element: <ShowTV/>
             },
             {
                 path: "/search/multi/:term",

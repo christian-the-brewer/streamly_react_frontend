@@ -20,7 +20,7 @@ export const getPopularTVByPlatform = (region, platform) => {
 //get single tv show
 export const getTVById = (showId) => {
     return axios({
-        url: `${apiUrl}/tv/${showId}`,
+        url: `${apiUrl}/tv/show/${showId}`,
         method: "GET",
     })
 };

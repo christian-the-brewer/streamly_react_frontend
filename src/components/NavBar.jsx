@@ -33,15 +33,14 @@ export default function NavBar(props) {
                             <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies/prime">Prime</NavDropdown.Item>
                             <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/movies/disney">Disney+</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link onClick={()=>setExpanded(false)} href="#shows">Shows</Nav.Link>
-                        {/*<NavDropdown title="TV" id="basic-nav-dropdown">*/}
-                        {/*    <NavDropdown.Item onClick={()=>setExpanded(false)} href="#tv" as={Link} to="/tv">All</NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Item onClick={()=>setExpanded(false)} href="#tv/netflix" as={Link} to="/tv/netflix">Netflix</NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/hulu">Hulu</NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/max">Max</NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/prime">Prime</NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/disney">Disney+</NavDropdown.Item>*/}
-                        {/*</NavDropdown>*/}
+                        <NavDropdown title="TV" id="basic-nav-dropdown">
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#tv" as={Link} to="/tv">All</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#tv/netflix" as={Link} to="/tv/netflix">Netflix</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/hulu">Hulu</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/max">Max</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/prime">Prime</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/disney">Disney+</NavDropdown.Item>
+                        </NavDropdown>
                         <Nav.Link onClick={()=>setExpanded(false)} href="#register" as={Link} to="/register">Sign Up</Nav.Link>
                         <Nav.Link  onClick={()=>{
                             setExpanded(false)
