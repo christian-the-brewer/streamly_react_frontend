@@ -11,7 +11,7 @@ import ShowTV from "./components/show/ShowTV.jsx";
 import ShowPerson from "./components/show/ShowPerson.jsx";
 import SearchResultsPage from "./components/SearchResultsPage.jsx";
 import TVIndexPage from "./components/TVIndexPage.jsx";
-import {getPopularTV} from "./api/tv.js";
+import {getPopularTV, getPopularTVByPlatform} from "./api/tv.js";
 import Login from "./routes/auth/login.jsx";
 import Register from "./routes/auth/register.jsx";
 
@@ -36,12 +36,15 @@ function App() {
                 <Route path="/movies" element={<MoviesIndexPage
                     title={"Today's Hot Movies"}
                     apiCall={getPopularMovies}/>}/>
+                <Route path="/tv" element={<TVIndexPage
+                    title={"Today's Hot Shows"}
+                    apiCall={getPopularTV} />}/>
                 <Route path="/movies/:platform" element={<MoviesIndexPage
                     title={"Popular Movies on"}
                     apiCall={getPopularMoviesByPlatform}/>}/>
                 <Route path="/tv/:platform" element={<TVIndexPage
-                    title={"Today's Hot Shows"}
-                    apiCall={getPopularTV}/>}/>
+                    title={"Popular Shows on"}
+                    apiCall={getPopularTVByPlatform}/>}/>
                 <Route path="/movie/:id" element={<ShowMovie/>}/>
                 <Route path="/tv/show/:id" element={<ShowTV/>}/>
                 <Route path="/person/:id" element={<ShowPerson/>}/>
