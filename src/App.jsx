@@ -31,7 +31,9 @@ function App() {
             />
             <Routes>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register/>}/>
+                <Route path="/register" element={<Register
+                handleShow={handleShow}
+                handleClose={handleClose}/>}/>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/movies" element={<MoviesIndexPage
                     title={"Today's Hot Movies"}
