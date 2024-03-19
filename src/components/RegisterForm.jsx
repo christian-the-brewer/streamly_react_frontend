@@ -1,8 +1,10 @@
 import {Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
+import axios from "axios";
+import apiUrl from "../apiConfig.js";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 export default function RegisterForm(props) {
 
@@ -11,32 +13,61 @@ export default function RegisterForm(props) {
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [passwordsMatch, setPasswordsMatch] = useState(false);
+    const [inputValid, setInputValid] = useState(false)
 
     useEffect(() => {
         if (password === confirmedPassword) {
             if (password !== "") {
                 setPasswordsMatch(true);
             }
-        }
+        } else setPasswordsMatch(false);
     }, [password, confirmedPassword]);
 
+    useEffect(() => {
+        if (USER_REGEX.test(username) && PWD_REGEX.test(password) &&PWD_REGEX.test(confirmedPassword) && passwordsMatch) {
+            setInputValid(true);
+        } else {
+            setInputValid(false)
+        }
+    }, [username, password, confirmedPassword, passwordsMatch]);
     const handleChange = (event, setter) => {
         setter(event.target.value)
     };
 
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        if (!inputValid) {
+            return;
+        } else {
+            try {
+                const response = await axios.post(
+                    `${apiUrl}/register`,
+                    JSON.stringify({username, email, password}),
+                    {
+                        headers: {"Content-Type": "application/json"},
+                        withCredentials: true,
+            })
+                console.log(response.data);
+                //TODO clear input fields, show success
+            } catch (err) {
+            console.log(err);
+            }
+        }
+    };
+
     return (
         <section>
-            <form className="mt-4">
+            <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="form-floating mb-3">
                     <input onChange={(event) => handleChange(event, setEmail)}
-                           type="email" className="form-control rounded-3" id="email"
+                           type="email" className="form-control rounded-3" value={email} id="email"
                            placeholder="name@example.com" required/>
                     <label htmlFor="email">Email address</label>
                 </div>
                 <div className="form-floating mb-3">
                     <input onChange={(event) => handleChange(event, setUsername)}
                            type="text" className="form-control rounded-3" id="username"
-                           placeholder="username" required/>
+                           placeholder="username" value={username} required/>
                     <label htmlFor="username">Username</label>
                 </div>
                 <div className="form-floating mb-3">
@@ -48,11 +79,11 @@ export default function RegisterForm(props) {
                 <div className="form-floating mb-3">
                     <input onChange={(event) => handleChange(event, setConfirmedPassword)}
                            type="password" className="form-control rounded-3" id="matchPassword"
-                           placeholder="Confirm Password" required/>
+                           placeholder="Confirm Password" value={confirmedPassword} required/>
                     <label htmlFor="matchPassword">Confirm Password</label>
                 </div>
                 <Button className="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit"
-                        disabled={!passwordsMatch}>Sign up
+                        disabled={!inputValid}>Sign up
                 </Button>
                 <small className="text-body-secondary">By clicking Sign up, you agree to the terms of
                     use.</small>
