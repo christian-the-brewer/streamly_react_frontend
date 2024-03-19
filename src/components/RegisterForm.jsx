@@ -3,12 +3,10 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import apiUrl from "../apiConfig.js";
 
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 export default function RegisterForm(props) {
 
-    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
@@ -24,12 +22,12 @@ export default function RegisterForm(props) {
     }, [password, confirmedPassword]);
 
     useEffect(() => {
-        if (USER_REGEX.test(username) && PWD_REGEX.test(password) &&PWD_REGEX.test(confirmedPassword) && passwordsMatch) {
+        if (PWD_REGEX.test(password) && PWD_REGEX.test(confirmedPassword) && passwordsMatch) {
             setInputValid(true);
         } else {
             setInputValid(false)
         }
-    }, [username, password, confirmedPassword, passwordsMatch]);
+    }, [password, confirmedPassword, passwordsMatch]);
     const handleChange = (event, setter) => {
         setter(event.target.value)
     };
@@ -42,7 +40,7 @@ export default function RegisterForm(props) {
             try {
                 const response = await axios.post(
                     `${apiUrl}/register`,
-                    JSON.stringify({username, email, password}),
+                    JSON.stringify({email, password}),
                     {
                         headers: {"Content-Type": "application/json"},
                         withCredentials: true,
@@ -63,12 +61,6 @@ export default function RegisterForm(props) {
                            type="email" className="form-control rounded-3" value={email} id="email"
                            placeholder="name@example.com" required/>
                     <label htmlFor="email">Email address</label>
-                </div>
-                <div className="form-floating mb-3">
-                    <input onChange={(event) => handleChange(event, setUsername)}
-                           type="text" className="form-control rounded-3" id="username"
-                           placeholder="username" value={username} required/>
-                    <label htmlFor="username">Username</label>
                 </div>
                 <div className="form-floating mb-3">
                     <input onChange={(event) => handleChange(event, setPassword)}

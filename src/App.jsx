@@ -18,7 +18,10 @@ import Register from "./routes/auth/register.jsx";
 function App() {
 
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = (func) => {
+        func()
+        setShow(false)
+    };
     const handleShow = () => setShow(true);
 
     return (

@@ -26,16 +26,21 @@ export default function LoginModal(props) {
         }
     };
 
+    const clearFields = () => {
+        setEmail("")
+        setPassword("")
+    };
+
     const handleChange = (event, setter) => {
         setter(event.target.value)
     };
 
     return (
 
-        <Modal show={props.show} onHide={props.handleClose}>
+        <Modal show={props.show} onHide={() => props.handleClose(clearFields)}>
             <Modal.Header>
                 <Modal.Title>Sign In</Modal.Title>
-                <Button variant="outline-danger" onClick={props.handleClose}>X</Button>
+                <Button variant="outline-danger" onClick={() => props.handleClose(clearFields)}>X</Button>
             </Modal.Header>
             <Modal.Body>
                 <form className="" onSubmit={handleSubmit}>
@@ -53,7 +58,7 @@ export default function LoginModal(props) {
                                     </Button>
                                     <hr className="my-4"/>
                                     <h2 className="fs-5 fw-bold mb-3">Don't have an account yet? </h2>
-                                    <Button onClick={props.handleClose} as={Link} to="/register" variant="secondary"
+                                    <Button onClick={() => props.handleClose(clearFields)} as={Link} to="/register" variant="secondary"
                                             className="w-100 py-2 mb-2 btn rounded-3" type="submit">
                                         Sign up for free
                                     </Button>
