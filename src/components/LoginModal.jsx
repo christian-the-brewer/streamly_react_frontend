@@ -2,10 +2,33 @@ import {Button, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {Modal} from "react-bootstrap";
 import {useState} from "react";
+import axios from "axios";
+import apiUrl from "../apiConfig.js";
 
 export default function LoginModal(props) {
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post(
+                `${apiUrl}/login`,
+                JSON.stringify({email, password}),
+                {
+                    headers: {"Content-Type": "application/json"},
+                    withCredentials: true,
+                })
+            console.log(response.data)
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleChange = (event, setter) => {
+        setter(event.target.value)
+    };
 
     return (
 
@@ -15,15 +38,15 @@ export default function LoginModal(props) {
                 <Button variant="outline-danger" onClick={props.handleClose}>X</Button>
             </Modal.Header>
             <Modal.Body>
-                <form className="">
+                <form className="" onSubmit={handleSubmit}>
                                        <div className="form-floating mb-3">
-                                             <input type="email" className="form-control rounded-3" id="floatingInput"
-                                               placeholder="name@example.com"/>
+                                             <input onChange={(event) => handleChange(event, setEmail)} value={email} type="email" className="form-control rounded-3" id="floatingInput"
+                                               placeholder="name@example.com" required/>
                                         <label htmlFor="floatingInput">Email address</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input type="password" className="form-control rounded-3" id="floatingPassword"
-                                               placeholder="Password"/>
+                                        <input onChange={(event) => handleChange(event, setPassword)} value={password} type="password" className="form-control rounded-3" id="floatingPassword"
+                                               placeholder="Password" required/>
                                         <label htmlFor="floatingPassword">Password</label>
                                     </div>
                                     <Button className="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign in
