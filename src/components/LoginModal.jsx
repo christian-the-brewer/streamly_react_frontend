@@ -1,14 +1,16 @@
 import {Button, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {Modal} from "react-bootstrap";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import axios from "axios";
 import apiUrl from "../apiConfig.js";
+import AuthContext from "../context/AuthProvider.jsx";
 
 export default function LoginModal(props) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { setAuth } = useContext(AuthContext)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,8 +23,20 @@ export default function LoginModal(props) {
                     withCredentials: true,
                 })
             console.log(response.data)
+            const accessToken = response?.data?.accessToken;
+            setAuth({
+                email, password, accessToken,
+            });
         } catch (err) {
-            console.error(err);
+            if (!err?.response) {
+                console.log("No Server Response")
+            } else if (err.response?.status === 400) {
+                console.log("Missing Credentials")
+            } else if (err.response?.status === 401) {
+                console.log("Unauthorized")
+            } else {
+                console.log("Login Failed")
+            }
         }
     };
 
