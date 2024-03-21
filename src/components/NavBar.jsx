@@ -41,6 +41,7 @@ export default function NavBar(props) {
                             <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/prime">Prime</NavDropdown.Item>
                             <NavDropdown.Item onClick={()=>setExpanded(false)} href="#movies" as={Link} to="/tv/disney">Disney+</NavDropdown.Item>
                         </NavDropdown>
+                        <Nav.Link onClick={()=>setExpanded(false)} href="#watch_list" as={Link} to="/watch_list">Watch List</Nav.Link>
                         <Nav.Link onClick={()=>setExpanded(false)} href="#register" as={Link} to="/register">Sign Up</Nav.Link>
                         <Nav.Link  onClick={()=>{
                             setExpanded(false)

@@ -1,16 +1,20 @@
-import {Button, Form} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Button} from "react-bootstrap";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Modal} from "react-bootstrap";
 import {useContext, useState} from "react";
 import axios from "axios";
 import apiUrl from "../apiConfig.js";
 import AuthContext from "../context/AuthProvider.jsx";
+import useAuth from "../hooks/useAuth.js";
 
 export default function LoginModal(props) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { setAuth } = useContext(AuthContext)
+    const {auth, setAuth} = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,7 +31,14 @@ export default function LoginModal(props) {
             setAuth({
                 email, password, accessToken,
             });
+            console.log(auth)
+            //clear inputs after success
+            clearFields();
+            navigate(from, {replace: true});
         } catch (err) {
+            //clear password
+            setPassword("");
+            console.log(err);
             if (!err?.response) {
                 console.log("No Server Response")
             } else if (err.response?.status === 400) {

@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route, Outlet} from "react-router-dom";
+import {Routes, Route, Outlet} from "react-router-dom";
 import './App.css'
 import Home from "./components/Home.jsx";
 import ErrorPage from "./components/errors/ErrorPage.jsx";
@@ -14,6 +14,9 @@ import TVIndexPage from "./components/TVIndexPage.jsx";
 import {getPopularTV, getPopularTVByPlatform} from "./api/tv.js";
 import Login from "./routes/auth/login.jsx";
 import Register from "./routes/auth/register.jsx";
+import Layout from "./components/Layout.jsx";
+import RequireAuth from "./components/RequireAuth.jsx";
+import WatchListIndex from "./components/indices/WatchListIndex.jsx";
 
 function App() {
 
@@ -25,7 +28,7 @@ function App() {
     const handleShow = () => setShow(true);
 
     return (
-        <Router>
+        <>
             <NavBar
                 show={show}
                 setShow={setShow}
@@ -33,30 +36,43 @@ function App() {
                 handleShow={handleShow}
             />
             <Routes>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register
-                handleShow={handleShow}
-                handleClose={handleClose}/>}/>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/movies" element={<MoviesIndexPage
-                    title={"Today's Hot Movies"}
-                    apiCall={getPopularMovies}/>}/>
-                <Route path="/tv" element={<TVIndexPage
-                    title={"Today's Hot Shows"}
-                    apiCall={getPopularTV} />}/>
-                <Route path="/movies/:platform" element={<MoviesIndexPage
-                    title={"Popular Movies on"}
-                    apiCall={getPopularMoviesByPlatform}/>}/>
-                <Route path="/tv/:platform" element={<TVIndexPage
-                    title={"Popular Shows on"}
-                    apiCall={getPopularTVByPlatform}/>}/>
-                <Route path="/movie/:id" element={<ShowMovie/>}/>
-                <Route path="/tv/show/:id" element={<ShowTV/>}/>
-                <Route path="/person/:id" element={<ShowPerson/>}/>
-                <Route path="/search/multi/:term" element={<SearchResultsPage/>}/>
-                <Route path="*" element={<ErrorPage/>}/>
+                <Route path="/" element={<Layout/>}>
+                    {/*  Public Routes  */}
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/register" element={<Register
+                        handleShow={handleShow}
+                        handleClose={handleClose}/>}/>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/movies" element={<MoviesIndexPage
+                        title={"Today's Hot Movies"}
+                        apiCall={getPopularMovies}/>}/>
+                    <Route path="/tv" element={<TVIndexPage
+                        title={"Today's Hot Shows"}
+                        apiCall={getPopularTV}/>}/>
+                    <Route path="/movies/:platform" element={<MoviesIndexPage
+                        title={"Popular Movies on"}
+                        apiCall={getPopularMoviesByPlatform}/>}/>
+                    <Route path="/tv/:platform" element={<TVIndexPage
+                        title={"Popular Shows on"}
+                        apiCall={getPopularTVByPlatform}/>}/>
+                    <Route path="/movie/:id" element={<ShowMovie/>}/>
+                    <Route path="/tv/show/:id" element={<ShowTV/>}/>
+                    <Route path="/person/:id" element={<ShowPerson/>}/>
+                    <Route path="/search/multi/:term" element={<SearchResultsPage/>}/>
+
+
+
+                    {/*  Protected Routes  */}
+                    <Route element={<RequireAuth handleShow={handleShow} handleClose={handleClose}/>}>
+                        <Route path="/watch_list" element={<WatchListIndex />}/>
+                    </Route>
+
+                    {/*  Catch All  */}
+                    <Route path="*" element={<ErrorPage/>}/>
+                </Route>
+
             </Routes>
-        </Router>
+        </>
     );
 }
 
