@@ -1,10 +1,13 @@
 import {useParams} from "react-router-dom";
 import { getMovieById } from "../../api/movies.js";
 import {useEffect, useState} from "react";
+import useAuth from "../../hooks/useAuth.js";
+import {Button} from "react-bootstrap";
 
 export default function ShowMovie() {
     const [movie, setMovie] = useState(null);
     const {id} = useParams();
+    const {auth} = useAuth();
 
     useEffect(() => {
         getMovieById(id)
@@ -52,7 +55,7 @@ export default function ShowMovie() {
                 <ul> {genresList()} </ul>
                 <h6>{movie.overview}</h6>
                 <h5>{movie.runtime} minutes</h5>
-                {/*<h3 className="whiteColorOnly">Available for streaming on: {whereStreaming('name')}</h3>*/}
+                <Button 
             </div>
         </div>
     );

@@ -4,41 +4,49 @@ import {useEffect, useState} from "react";
 import TVCard from "../cards/TVCard.jsx";
 import MovieCard from "../cards/MovieCard.jsx"
 import PersonCard from "../cards/PersonCard.jsx";
+import useAuth from "../../hooks/useAuth.js";
+import {getWatchList} from "../../api/users.js";
 
 export default function WatchListIndex(props) {
 
-    const [results, setResults] = useState(null);
-    const { term } = useParams()
+    const [content, setContent] = useState(null);
+    const [contentType, setContentType] = useState("movie");
+    const {auth} = useAuth();
 
-    // useEffect(() => {
-    //     props.apiCall(term)
-    //         .then(res => setResults(res.data.results))
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    // }, [term]);
-    //
-    // if (!results) {
-    //     return <h1>Loading</h1>
-    // }
-    //
-    // const searchCards = results.map((result, index) => {
-    //         if (result.media_type === "tv") {
-    //             return <TVCard key={index} result={result}/>
-    //         } else if (result.media_type === "movie") {
-    //             return <MovieCard key={index} result={result} />
-    //         }else if (result.media_type === "person") {
-    //             return <PersonCard key={index} result={result} />
-    //         }
-    //     }
-    //
-    // );
+    useEffect(() => {
+        getWatchList(contentType)
+            .then(res => setContent(res.data.content))
+            .catch(err => {
+                console.error(err)
+            })
+    }, [contentType]);
+
+    if (!content) {
+        return (
+            <>
+                <h1>Your WatchList</h1>
+                <h2>Loading</h2>
+            </>
+        )
+    }
+
+    const contentCards = content.map((item) => {
+        if (contentType === "movie") {
+            return <MovieCard key={item.id} result={item}/>
+        } else {
+            return <TVCard key={item.id} result={item}/>
+        }
+    });
+
 
     return (
-        // <Row xs={1} md={2} lg={4} className="g-4">
-        //     {searchCards}
-        // </Row>
+        <>
+            <h1>WatchList</h1>
+            <Row xs={1} md={2} lg={4} className="g-4">
+                {contentCards}
+            </Row>
+        </>
 
-        <h1>WatchList</h1>
     )
+        ;
 };
