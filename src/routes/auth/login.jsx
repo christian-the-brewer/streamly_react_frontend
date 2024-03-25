@@ -28,8 +28,8 @@ export default function Login() {
                 }
             );
             const accessToken = response?.data?.accessToken;
-            setAuth({email, password, accessToken})
-            console.log(response.data)
+            const userId = response?.data?.userId;
+            setAuth({email, password, userId, accessToken})
             clearFields();
             navigate(from, {replace: true});
         } catch (err) {

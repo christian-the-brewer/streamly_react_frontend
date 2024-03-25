@@ -3,9 +3,13 @@ import { getMovieById } from "../../api/movies.js";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth.js";
 import {Button} from "react-bootstrap";
+import axios from "axios";
+import apiUrl from "../../apiConfig.js";
 
 export default function ShowMovie() {
     const [movie, setMovie] = useState(null);
+    const [watchList, setWatchList] = useState(null);
+    const [inWatchList, setInWatchList] = useState(false);
     const {id} = useParams();
     const {auth} = useAuth();
 
@@ -17,6 +21,34 @@ export default function ShowMovie() {
             console.log(err)
         })
     }, []);
+
+    useEffect(() => {
+
+    });
+
+    const checkWatchList = () => {
+        return 0
+    };
+
+    const handleClick = async (event) => {
+        event.preventDefault();
+        //if movie is not currently in watch_list and should be added
+        if (!inWatchList) {
+            try {
+                const response = await axios.put(`${apiUrl}/watch_list`,
+                    JSON.stringify({user_id: auth.userId, movie_id: id}),
+                    {
+                        headers: {"Content-Type": "application/json"},
+                        withCredentials: true,
+                    });
+            } catch (err){
+                console.log(err);
+            }
+        } else {
+            //movie is already in watchlist so should be removed
+
+        }
+    };
 
     //get year from movie
     const year = () => {
@@ -55,7 +87,7 @@ export default function ShowMovie() {
                 <ul> {genresList()} </ul>
                 <h6>{movie.overview}</h6>
                 <h5>{movie.runtime} minutes</h5>
-                <Button 
+                <Button onClick={handleClick} variant="secondary" className="py-2 mb-2 btn rounded-3">{}</Button>
             </div>
         </div>
     );
