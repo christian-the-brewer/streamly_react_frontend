@@ -7,13 +7,24 @@ import {
     NavDropdown
 } from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import LoginModal from "./LoginModal.jsx";
 import SearchBar from "./SearchBar.jsx";
+import useAuth from "../hooks/useAuth.js";
 
 export default function NavBar(props) {
     const [expanded, setExpanded] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const {auth} = useAuth();
 
+
+    useEffect(() => {
+        if (auth.userId) {
+            setIsLoggedIn(true)
+        }
+    }, []);
+
+   
 
     return (
 

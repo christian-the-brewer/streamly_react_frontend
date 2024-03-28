@@ -1,14 +1,15 @@
 import {useParams} from "react-router-dom";
-import { getMovieById } from "../../api/movies.js";
+import {getMovieById} from "../../api/movies.js";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth.js";
 import {Button} from "react-bootstrap";
 import axios from "axios";
 import apiUrl from "../../apiConfig.js";
+import {getWatchList} from "../../api/watchList.js";
 
 export default function ShowMovie() {
     const [movie, setMovie] = useState(null);
-    const [watchList, setWatchList] = useState(null);
+    const [watchList, setWatchList] = useState([]);
     const [inWatchList, setInWatchList] = useState(false);
     const {id} = useParams();
     const {auth} = useAuth();
@@ -22,12 +23,37 @@ export default function ShowMovie() {
         })
     }, []);
 
+    //get the movies in user's watchlist. depend on the in watchlist state
     useEffect(() => {
+        if (auth.userId) {
+            getWatchList(auth.userId)
+                .then(res => {
+                    const splitMovies = res.data.content.movies.map(movie => {
+                        const splitArray = movie.split(" ");
+                        movie = splitArray[0]
+                        return movie;
+                    })
+                    setWatchList(splitMovies)
+                    checkWatchList();
+                }).catch(err => {
+                console.error(err);
+            })
+        }
+    }, [inWatchList]);
 
-    });
+    //check to see if movie is in watchlist only if we have a movie AND watchlist
+    useEffect(() => {
+        if (movie && watchList) {
+            setInWatchList(watchList.some((element) => {
+                return element == movie.id
+            }))
+        }
+    }, [movie, watchList, inWatchList]);
 
     const checkWatchList = () => {
-        return 0
+        setInWatchList(watchList.some((element) => {
+            return element == movie.id
+        }))
     };
 
     const handleClick = async (event) => {
@@ -36,17 +62,38 @@ export default function ShowMovie() {
         if (!inWatchList) {
             try {
                 const response = await axios.put(`${apiUrl}/watch_list`,
-                    JSON.stringify({user_id: auth.userId, movie_id: id}),
+                    JSON.stringify({
+                        userId: auth.userId,
+                        contentId: movie.id,
+                        contentPoster: movie.poster_path,
+                        contentType: "movie"
+                    }),
                     {
                         headers: {"Content-Type": "application/json"},
                         withCredentials: true,
                     });
-            } catch (err){
+            } catch (err) {
                 console.log(err);
             }
+            setInWatchList(true)
         } else {
             //movie is already in watchlist so should be removed
-
+            try {
+                const response = await axios.patch(`${apiUrl}/watch_list`,
+                    JSON.stringify({
+                        userId: auth.userId,
+                        contentId: movie.id,
+                        contentPoster: movie.poster_path,
+                        contentType: "movie"
+                    }),
+                    {
+                        headers: {"Content-Type": "application/json"},
+                        withCredentials: true,
+                    });
+            } catch (err) {
+                console.log(err);
+            }
+            setInWatchList(false)
         }
     };
 
@@ -87,8 +134,11 @@ export default function ShowMovie() {
                 <ul> {genresList()} </ul>
                 <h6>{movie.overview}</h6>
                 <h5>{movie.runtime} minutes</h5>
-                <Button onClick={handleClick} variant="secondary" className="py-2 mb-2 btn rounded-3">{}</Button>
+                <Button onClick={handleClick} variant="secondary"
+                        style={{display: auth.userId ? "inline-block" : "none"}}
+                        className="py-2 mb-2 btn rounded-3">{inWatchList ? "Remove" : "Add"}</Button>
             </div>
         </div>
     );
 };
+

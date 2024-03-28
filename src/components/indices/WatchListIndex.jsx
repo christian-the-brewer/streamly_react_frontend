@@ -19,9 +19,24 @@ export default function WatchListIndex(props) {
     useEffect(() => {
         getWatchList(auth.userId)
             .then(res => {
-                setMovies(res.data.content.movies)
-                setShows(res.data.content.shows)
-                console.log(shows)
+               const splitMovies = res.data.content.movies.map(movie => {
+                    const splitArray = movie.split(" ");
+                    movie = {
+                        id: splitArray[0],
+                        poster_path: splitArray[1]
+                    }
+                    return movie;
+                })
+                const splitShows = res.data.content.shows.map(show => {
+                    const splitArray = show.split(" ");
+                    show = {
+                        id: splitArray[0],
+                        poster_path: splitArray[1]
+                    }
+                    return show;
+                })
+                setMovies(splitMovies)
+                setShows(splitShows)
             })
             .catch(err => {
                 console.error(err)
@@ -42,7 +57,7 @@ export default function WatchListIndex(props) {
     if (movies[0] !== "Add some movies to your Watch List!") {
         movieCards = movies.map((movie) => {
             console.log("movieCards movies", movies)
-            movie.poster_path = movie.poster;
+
             return (
                 <MovieCard key={movie.id} result={movie}/>
             )
@@ -82,14 +97,14 @@ export default function WatchListIndex(props) {
                 </ToggleButton>
             </ButtonGroup>
             <div style={{display: radioValue === "1" ? "inline" : "none"}}>
-            <Row xs={1} md={2} lg={4} className="g-4">
-                {movieCards}
-            </Row>
+                <Row xs={1} md={2} lg={4} className="g-4">
+                    {movieCards}
+                </Row>
             </div>
             <div style={{display: radioValue === "2" ? "inline" : "none"}}>
-            <Row xs={1} md={2} lg={4} className="g-4">
-                {showCards}
-            </Row>
+                <Row xs={1} md={2} lg={4} className="g-4">
+                    {showCards}
+                </Row>
             </div>
         </>
 
