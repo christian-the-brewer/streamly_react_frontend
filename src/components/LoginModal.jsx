@@ -33,7 +33,7 @@ export default function LoginModal(props) {
             });
             //clear inputs after success
             clearFields();
-            navigate(from, {replace: true});
+            props.handleClose(clearFields);
         } catch (err) {
             //clear password
             setPassword("");
