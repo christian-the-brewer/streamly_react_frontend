@@ -3,10 +3,12 @@ import axios from "axios";
 import ApiConfig from "../apiConfig.js";
 import apiUrl from "../apiConfig.js";
 import useRefreshToken from "../hooks/useRefreshToken.js";
+import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
 
 export default function Users() {
     const [users, setUsers] = useState();
     const refresh = useRefreshToken();
+    const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         let isMounted = true;
@@ -14,8 +16,8 @@ export default function Users() {
 
         const getUsers = async () => {
             try {
-                const response = await axios.get(
-                    `${apiUrl}/users`,
+                const response = await axiosPrivate.get(
+                    "/users",
                     {signal: controller.signal});
                 console.log(response.data.users);
                 isMounted && setUsers(response.data.users);
