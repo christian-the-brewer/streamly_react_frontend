@@ -26,10 +26,12 @@ export default function LoginModal(props) {
                     headers: {"Content-Type": "application/json"},
                     withCredentials: true,
                 })
+            //grab accesstoken, id, and roles from response
             const accessToken = response?.data?.accessToken;
             const userId = response?.data?.userId;
+            const roles = response?.data?.roles;
             setAuth({
-                email, password, userId, accessToken,
+                email, password, userId, roles, accessToken,
             });
             //clear inputs after success
             clearFields();

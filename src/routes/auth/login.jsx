@@ -29,7 +29,8 @@ export default function Login() {
             );
             const accessToken = response?.data?.accessToken;
             const userId = response?.data?.userId;
-            setAuth({email, password, userId, accessToken})
+            const roles = response?.data?.roles;
+            setAuth({email, password, userId, roles, accessToken})
             clearFields();
             navigate(from, {replace: true});
         } catch (err) {

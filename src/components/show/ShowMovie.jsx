@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth.js";
 import {Button} from "react-bootstrap";
 import axios from "axios";
 import apiUrl from "../../apiConfig.js";
-import {getWatchList} from "../../api/watchList.js";
+import {addContentToWatchList, getWatchList} from "../../api/watchList.js";
 
 export default function ShowMovie() {
     const [movie, setMovie] = useState(null);
@@ -26,7 +26,7 @@ export default function ShowMovie() {
     //get the movies in user's watchlist. depend on the in watchlist state
     useEffect(() => {
         if (auth.userId) {
-            getWatchList(auth.userId)
+            getWatchList(auth.userId, auth.accessToken)
                 .then(res => {
                     const splitMovies = res.data.content.movies.map(movie => {
                         const splitArray = movie.split(" ");
@@ -60,22 +60,31 @@ export default function ShowMovie() {
         event.preventDefault();
         //if movie is not currently in watch_list and should be added
         if (!inWatchList) {
-            try {
-                const response = await axios.put(`${apiUrl}/watch_list`,
-                    JSON.stringify({
-                        userId: auth.userId,
-                        contentId: movie.id,
-                        contentPoster: movie.poster_path,
-                        contentType: "movie"
-                    }),
-                    {
-                        headers: {"Content-Type": "application/json"},
-                        withCredentials: true,
-                    });
-            } catch (err) {
-                console.log(err);
-            }
-            setInWatchList(true)
+            // try {
+            //     const response = await axios.put(`${apiUrl}/watch_list`,
+            //         JSON.stringify({
+            //             userId: auth.userId,
+            //             contentId: movie.id,
+            //             contentPoster: movie.poster_path,
+            //             contentType: "movie"
+            //         }),
+            //         {
+            //             headers: {
+            //                 "Content-Type": "application/json",
+            //                 Authorization: `Bearer ${auth.accessToken}`,
+            //             },
+            //             withCredentials: true,
+            //         });
+            // } catch (err) {
+            //     console.log(err);
+            // }
+            addContentToWatchList(auth.userId, movie.id, movie.poster_path, "movie", auth.accessToken)
+                .then(setInWatchList(true))
+                .catch(err => {
+                    console.log(err)
+                });
+           // }
+            // setInWatchList(true)
         } else {
             //movie is already in watchlist so should be removed
             try {
@@ -87,7 +96,10 @@ export default function ShowMovie() {
                         contentType: "movie"
                     }),
                     {
-                        headers: {"Content-Type": "application/json"},
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${auth.accessToken}`,
+                        },
                         withCredentials: true,
                     });
             } catch (err) {

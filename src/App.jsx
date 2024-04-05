@@ -17,6 +17,7 @@ import Register from "./routes/auth/register.jsx";
 import Layout from "./components/Layout.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
 import WatchListIndex from "./components/indices/WatchListIndex.jsx";
+import AdminPage from "./components/AdminPage.jsx";
 
 function App() {
 
@@ -63,8 +64,11 @@ function App() {
 
 
                     {/*  Protected Routes  */}
-                    <Route element={<RequireAuth handleShow={handleShow} handleClose={handleClose}/>}>
+                    <Route element={<RequireAuth allowedRoles={[5]} handleShow={handleShow} handleClose={handleClose}/>}>
                         <Route path="/watch_list" element={<WatchListIndex />}/>
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={[1]} handleShow={handleShow} handleClose={handleClose}/>}>
+                        <Route path="/admin" element={<AdminPage />}/>
                     </Route>
 
                     {/*  Catch All  */}

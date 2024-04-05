@@ -17,7 +17,7 @@ export default function WatchListIndex(props) {
     const {auth} = useAuth();
 
     useEffect(() => {
-        getWatchList(auth.userId)
+        getWatchList(auth.userId, auth.accessToken)
             .then(res => {
                const splitMovies = res.data.content.movies.map(movie => {
                     const splitArray = movie.split(" ");
