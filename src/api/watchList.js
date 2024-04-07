@@ -1,15 +1,15 @@
 import axios from "axios";
 import apiUrl from "../apiConfig.js";
 
+
+
+
 //Get watchlist
 export const getWatchList = (userId, accessToken) => {
     console.log(`get watchlist of user ${userId}`)
     return axios({
         url: `${apiUrl}/watch_list/${userId}`,
         method: "GET",
-        // data: {
-        //     userId: userId,
-        // }
         headers: {
             Authorization: `Bearer ${accessToken}`
         }
@@ -17,7 +17,7 @@ export const getWatchList = (userId, accessToken) => {
 };
 
 //PUT content into watchlist
-export const addContentToWatchList = (userId, contentId, contentPoster, contentType, accessToken) => {
+export const addContentToWatchList = async (userId, contentId, contentPoster, contentType, accessToken) => {
     console.log("begin add content to watchlist")
     return axios({
         url: `${apiUrl}/watch_list`,

@@ -6,6 +6,9 @@ import MovieCard from "../cards/MovieCard.jsx"
 import PersonCard from "../cards/PersonCard.jsx";
 import useAuth from "../../hooks/useAuth.js";
 import {getWatchList} from "../../api/watchList.js";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
+import axios from "axios";
+import apiUrl from "../../apiConfig.js";
 
 export default function WatchListIndex(props) {
 
@@ -15,8 +18,21 @@ export default function WatchListIndex(props) {
     const [moviesToggled, setMoviesToggled] = useState(true)
     const [radioValue, setRadioValue] = useState("1");
     const {auth} = useAuth();
+    const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
+
+        const getWatchList = (userId, accessToken) => {
+            console.log(`get watchlist of user ${userId}`)
+            return axiosPrivate({
+                url: `/watch_list/${userId}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+        };
+
         getWatchList(auth.userId, auth.accessToken)
             .then(res => {
                const splitMovies = res.data.content.movies.map(movie => {

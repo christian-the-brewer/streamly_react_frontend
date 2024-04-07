@@ -12,8 +12,10 @@ export default function useAxiosPrivate() {
         const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (!config.headers["Authorization"]) {
+                    console.log("No Auth header")
                     config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
                 }
+                console.log("config: ", config)
                 return config;
             }, (error) => Promise.reject(error)
         );
@@ -24,6 +26,7 @@ export default function useAxiosPrivate() {
                 const prevRequest = error?.config;
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true;
+                    console.log("response interceptor: refreshing...")
                     const newAccessToken = await refresh();
                     prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
                     return axiosPrivate(prevRequest);
