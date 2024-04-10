@@ -2,6 +2,7 @@ import {Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import apiUrl from "../apiConfig.js";
+import {Navigate, useNavigate} from "react-router-dom";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
@@ -12,6 +13,7 @@ export default function RegisterForm(props) {
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [passwordsMatch, setPasswordsMatch] = useState(false);
     const [inputValid, setInputValid] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (password === confirmedPassword) {
@@ -47,6 +49,7 @@ export default function RegisterForm(props) {
             })
                 console.log(response.data);
                 //TODO clear input fields, show success
+                navigate("/");
             } catch (err) {
             console.log(err);
             }

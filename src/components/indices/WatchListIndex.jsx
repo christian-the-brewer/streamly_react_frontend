@@ -72,8 +72,6 @@ export default function WatchListIndex(props) {
 
     if (movies[0] !== "Add some movies to your Watch List!") {
         movieCards = movies.map((movie) => {
-            console.log("movieCards movies", movies)
-
             return (
                 <MovieCard key={movie.id} result={movie}/>
             )
